@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">freegul_version_1</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="log_in">Log In</string>
+    <string name="masuk">Masuk</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="freegul">FreeGul</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="input_data_pasien">Input Data Pasien</string>
+    <string name="usia">Usia</string>
+    <string name="laki_laki">Laki-Laki</string>
+    <string name="perempuan">perempuan</string>
+    <string name="cek_gula">CEK GULA</string>
+    <string name="no_handphone">No HandPhone</string>
+    <string name="gula_darah_anda">Gula Darah Anda</string>
+    <string name="zero">0</string>
+    <string name="kirim">Kirim</string>
+    <string name="history_data_pasien">History Data Pasien</string>
+</resources>
