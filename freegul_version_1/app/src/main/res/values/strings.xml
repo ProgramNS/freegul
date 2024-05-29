@@ -18,4 +18,6 @@
     <string name="zero">0</string>
     <string name="kirim">Kirim</string>
     <string name="history_data_pasien">History Data Pasien</string>
+    <string name="email">email</string>
+    <string name="free_gul">FREE GUL</string>
 </resources>

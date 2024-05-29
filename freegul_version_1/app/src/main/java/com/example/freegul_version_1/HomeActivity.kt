@@ -19,12 +19,9 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this,InputDataActivity::class.java)
             startActivity(intent)
         }
+
+        binding.historyData.setOnClickListener{
+            startActivity(Intent(this,HistoryActivity::class.java))
+        }
     }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null // Bebaskan objek binding saat aktivitas dihancurkan
-    }
-
 }

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="FREE GUL"
+            android:text="@string/free_gul"
             android:textColor="#FFFFFF"
             android:textSize="40sp"
             android:textStyle="bold"

@@ -4,9 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freegul_version_1.databinding.ItemPatientBinding
-class PatientAdapter(private val patients: List<Patient>) : RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() {
 
-    class PatientViewHolder(val binding: ItemPatientBinding) : RecyclerView.ViewHolder(binding.root)
+class PatientAdapter(private val patientList: List<Patient>) : RecyclerView.Adapter<PatientAdapter.PatientViewHolder>() {
+
+    class PatientViewHolder(private val binding: ItemPatientBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(patient: Patient) {
+            binding.tvDateTime.text = patient.dateTime
+            binding.tvName.text = patient.name
+            binding.tvAge.text = patient.age.toString()
+            binding.tvBloodSugar.text = "${patient.bloodSugar} mg/dl"
+            binding.tvPhoneNumber.text = patient.phoneNumber
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {
         val binding = ItemPatientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -14,15 +23,8 @@ class PatientAdapter(private val patients: List<Patient>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        val patient = patients[position]
-        holder.binding.tvDateTime.text = patient.dateTime
-        holder.binding.tvName.text = patient.name
-        holder.binding.tvAge.text = "${patient.age} tahun"
-        holder.binding.tvBloodSugar.text = "${patient.bloodSugar} mg/dl"
-        holder.binding.tvPhoneNumber.text = patient.phoneNumber // Menampilkan nomor telepon jika ada
+        holder.bind(patientList[position])
     }
 
-    override fun getItemCount(): Int {
-        return patients.size
-    }
+    override fun getItemCount(): Int = patientList.size
 }
