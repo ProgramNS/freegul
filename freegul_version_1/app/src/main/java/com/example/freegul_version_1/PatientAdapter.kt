@@ -9,11 +9,11 @@ class PatientAdapter(private val patientList: List<Patient>) : RecyclerView.Adap
 
     class PatientViewHolder(private val binding: ItemPatientBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(patient: Patient) {
-            binding.tvDateTime.text = patient.dateTime
-            binding.tvName.text = patient.name
-            binding.tvAge.text = patient.age.toString()
-            binding.tvBloodSugar.text = "${patient.bloodSugar} mg/dl"
-            binding.tvPhoneNumber.text = patient.phoneNumber
+            binding.tvDateTime.text = patient.tanggal
+            binding.tvName.text = patient.nama_lengkap
+            binding.tvAge.text = "Umur: " + patient.usia.toString()
+            binding.tvBloodSugar.text = "${patient.nilai_gula_darah} mg/dl"
+            binding.tvPhoneNumber.text = "No. HP: " + patient.no_handphone
         }
     }
 

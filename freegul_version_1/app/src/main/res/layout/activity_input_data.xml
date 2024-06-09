@@ -88,27 +88,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nama_lengkap" />
 
-    <RadioButton
-        android:id="@+id/laki"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginBottom="30dp"
-        android:text="@string/laki_laki"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/hp"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <RadioButton
-        android:id="@+id/perempuan"
+    <RadioGroup
+        android:id="@+id/jenisKelaminGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/perempuan"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/hp"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/usia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="35dp"
+        app:layout_constraintHorizontal_bias="0.5">
+        <RadioButton
+            android:id="@+id/laki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/laki_laki"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/perempuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:text="@string/perempuan"
+            android:textSize="15sp" />
+    </RadioGroup>
 
     <EditText
         android:id="@+id/hp"
@@ -139,5 +147,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
