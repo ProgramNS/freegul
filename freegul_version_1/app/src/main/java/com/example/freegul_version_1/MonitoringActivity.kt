@@ -9,6 +9,7 @@ import com.example.freegul_version_1.databinding.ActivityMonitoringBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.URL
@@ -19,6 +20,7 @@ class MonitoringActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMonitoringBinding
     private lateinit var auth: FirebaseAuth
     private val authToken = "vYeqh3ro1z9vrKdt1iY7jOEgxkitk9eR"
+    private val refreshIntervalMillis = 5000L // Interval pembaruan setiap 5 detik
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +40,8 @@ class MonitoringActivity : AppCompatActivity() {
         binding.hp.text = hp
         binding.jenisKelamin.text = jenisKelamin
 
-        // Ambil data dari Blynk
-        lifecycleScope.launch {
-            try {
-                val result = fetchBlynkData("v1")
-                binding.nilaiGulaDarah.text = result.toString()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this@MonitoringActivity, "Gagal mengambil data dari Blynk", Toast.LENGTH_SHORT).show()
-            }
-        }
+        // Mulai pembaruan otomatis
+        startAutoRefresh()
 
         binding.kirimDataGulaDarah.setOnClickListener {
             if (isValidInput()) {
@@ -63,6 +57,25 @@ class MonitoringActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Tidak bisa kirim data karena ada data yang kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun startAutoRefresh() {
+        lifecycleScope.launchWhenStarted {
+            while (true) {
+                try {
+                    val result = fetchBlynkData("v1")
+                    withContext(Dispatchers.Main) {
+                        binding.nilaiGulaDarah.text = result.toString()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@MonitoringActivity, "Gagal mengambil data dari Blynk", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                delay(refreshIntervalMillis)
             }
         }
     }
@@ -93,7 +106,7 @@ class MonitoringActivity : AppCompatActivity() {
             "usia" to usia,
             "jenis_kelamin" to jenisKelamin,
             "no_handphone" to hp,
-            "nilai_gula_Darah" to gulaDarah,
+            "nilai_gula_darah" to gulaDarah,
             "tanggal" to formattedDate
         )
         dataRef.setValue(data)
@@ -103,6 +116,7 @@ class MonitoringActivity : AppCompatActivity() {
         return binding.namaLengkap.text.isNotEmpty() && binding.usia.text.isNotEmpty() && binding.hp.text.isNotEmpty() && binding.jenisKelamin.text.isNotEmpty() && binding.nilaiGulaDarah.text.isNotEmpty()
     }
 }
+
 
 
 

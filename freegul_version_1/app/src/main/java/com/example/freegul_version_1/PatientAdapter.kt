@@ -12,7 +12,7 @@ class PatientAdapter(private val patientList: List<Patient>) : RecyclerView.Adap
             binding.tvDateTime.text = patient.tanggal
             binding.tvName.text = patient.nama_lengkap
             binding.tvAge.text = "Umur: " + patient.usia.toString()
-            binding.tvBloodSugar.text = "${patient.nilai_gula_darah} mg/dl"
+            binding.tvBloodSugar.text = patient.nilai_gula_darah.toString() + "mg/dl"
             binding.tvPhoneNumber.text = "No. HP: " + patient.no_handphone
         }
     }
