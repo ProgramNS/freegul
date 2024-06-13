@@ -11,6 +11,9 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.FormBody
 import kotlinx.coroutines.withContext
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -52,9 +55,16 @@ class MonitoringActivity : AppCompatActivity() {
                     binding.jenisKelamin.text.toString(),
                     binding.nilaiGulaDarah.text.toString().toDouble()
                 )
+                val token = "7398626423:AAGDgQmRPxCcFIEdZOU2PQeXrntVgBdPmSQ"
+                val chatId = "5391296055"
+                val message = "Berikut adalah nilai gula darah anda setelah di tes : ${binding.nilaiGulaDarah.text} mg/dl"
+                lifecycleScope.launch {
+                    sendMessageToTelegram(token, chatId, message)
+                }
                 Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Tidak bisa kirim data karena ada data yang kosong", Toast.LENGTH_SHORT).show()
             }
@@ -93,6 +103,31 @@ class MonitoringActivity : AppCompatActivity() {
         }
     }
 
+    suspend fun sendMessageToTelegram(token:String, chatId:String, message:String){
+        val client = OkHttpClient()
+        val url = "https://api.telegram.org/bot$token/sendMessage"
+        val formBody = FormBody.Builder()
+            .add("chat_id", chatId)
+            .add("text", message)
+            .build()
+        val request = Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build()
+
+        withContext(Dispatchers.IO){
+            client.newCall(request).execute().use { response ->
+                withContext(Dispatchers.Main){
+                if(!response.isSuccessful){
+                    Toast.makeText(this@MonitoringActivity, "Gagal mengirim pesan ke Telegram", Toast.LENGTH_SHORT).show()
+                } else  {
+                    Toast.makeText(this@MonitoringActivity, "Berhasil mengirim pesan ke Telegram", Toast.LENGTH_SHORT).show()
+                }
+                }
+            }
+        }
+    }
+
     private fun saveDataToDatabase(namaLengkap: String, usia: Int, hp: String, jenisKelamin: String, gulaDarah: Double) {
         val userId = auth.currentUser?.uid ?: return
         val database = FirebaseDatabase.getInstance("https://skripsi-a9be0-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -115,6 +150,8 @@ class MonitoringActivity : AppCompatActivity() {
     private fun isValidInput(): Boolean {
         return binding.namaLengkap.text.isNotEmpty() && binding.usia.text.isNotEmpty() && binding.hp.text.isNotEmpty() && binding.jenisKelamin.text.isNotEmpty() && binding.nilaiGulaDarah.text.isNotEmpty()
     }
+
+
 }
 
 
