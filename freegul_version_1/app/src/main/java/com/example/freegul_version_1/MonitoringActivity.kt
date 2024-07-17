@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.freegul_version_1.databinding.ActivityMonitoringBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,29 +35,18 @@ class MonitoringActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // Ambil data dari Intent
-        val namaLengkap = intent.getStringExtra("nama_lengkap") ?: ""
-        val usia = intent.getIntExtra("usia", 0)
-        val hp = intent.getStringExtra("No_hp") ?: ""
-        val jenisKelamin = intent.getStringExtra("jenis_kelamin") ?: ""
+        val nik = intent.getStringExtra("nik") ?: ""
+        println("NIK: $nik")
 
         // Tampilkan data pada view
-        binding.namaLengkap.text = namaLengkap
-        binding.usia.text = usia.toString()
-        binding.hp.text = hp
-        binding.jenisKelamin.text = jenisKelamin
+        binding.nik.text = nik
 
         // Mulai pembaruan otomatis
         startAutoRefresh()
 
         binding.kirimDataGulaDarah.setOnClickListener {
-            if (isValidInput()) {
-                saveDataToDatabase(
-                    binding.namaLengkap.text.toString(),
-                    binding.usia.text.toString().toInt(),
-                    binding.hp.text.toString(),
-                    binding.jenisKelamin.text.toString(),
-                    binding.nilaiGulaDarah.text.toString().toDouble()
-                )
+            val gulaDarah = binding.nilaiGulaDarah.text.toString().toDoubleOrNull()
+            if (gulaDarah != null) {
                 val token = "7398626423:AAGDgQmRPxCcFIEdZOU2PQeXrntVgBdPmSQ"
                 val chatId = "5391296055"
                 val message = "Berikut adalah nilai gula darah anda setelah di tes : ${binding.nilaiGulaDarah.text} mg/dl"
@@ -65,8 +57,9 @@ class MonitoringActivity : AppCompatActivity() {
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
+                saveDataToDatabase(nik, gulaDarah)
             } else {
-                Toast.makeText(this, "Tidak bisa kirim data karena ada data yang kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Nilai gula darah tidak valid", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -128,30 +121,45 @@ class MonitoringActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveDataToDatabase(namaLengkap: String, usia: Int, hp: String, jenisKelamin: String, gulaDarah: Double) {
+    private fun saveDataToDatabase(nik: String, gulaDarah: Double) {
         val userId = auth.currentUser?.uid ?: return
         val database = FirebaseDatabase.getInstance("https://skripsi-a9be0-default-rtdb.asia-southeast1.firebasedatabase.app/")
-        val dataRef = database.getReference("users").child(userId).child("pasien").push()
-        val currentDateTime = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
-        dateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
-        val formattedDate = dateFormat.format(currentDateTime)
-        val data = linkedMapOf(
-            "nama_lengkap" to namaLengkap,
-            "usia" to usia,
-            "jenis_kelamin" to jenisKelamin,
-            "no_handphone" to hp,
-            "nilai_gula_darah" to gulaDarah,
-            "tanggal" to formattedDate
-        )
-        dataRef.setValue(data)
+        val userRef = database.getReference("users").child(userId).child("pasien").child(nik)
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val currentDateTime = Calendar.getInstance().time
+                    val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
+                    dateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+                    val formattedDate = dateFormat.format(currentDateTime)
+
+                    val pasienData = snapshot.getValue(Patient::class.java)
+                    pasienData?.let { pasien ->
+                        val dataGulaDarah = hashMapOf(
+                            "Nilai_Gula_Darah" to gulaDarah,
+                            "Tanggal_Pengecekan" to formattedDate
+                        )
+                        // Simpan data gula darah di dalam node pasien yang sudah ada
+                        userRef.child("Data_Gula_Darah").push().setValue(dataGulaDarah)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Toast.makeText(this@MonitoringActivity, "Data gula darah berhasil disimpan", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(this@MonitoringActivity, "Gagal menyimpan data gula darah", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                    }
+                } else {
+                    Toast.makeText(this@MonitoringActivity, "NIK tidak ditemukan di database", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MonitoringActivity, "Gagal memeriksa NIK: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
-
-    private fun isValidInput(): Boolean {
-        return binding.namaLengkap.text.isNotEmpty() && binding.usia.text.isNotEmpty() && binding.hp.text.isNotEmpty() && binding.jenisKelamin.text.isNotEmpty() && binding.nilaiGulaDarah.text.isNotEmpty()
-    }
-
-
 }
 
 

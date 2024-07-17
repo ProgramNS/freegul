@@ -32,8 +32,8 @@ class NewPatientActivity : AppCompatActivity() {
         binding.kirimData.setOnClickListener {
             if (isValidInput()) {
                 saveDataToDatabase()
-//                val intent = Intent(this, MonitoringActivity::class.java)
-//                startActivity(intent)
+                val intent = Intent(this, MonitoringActivity::class.java)
+                startActivity(intent)
                 Toast.makeText(this , "Silahkan Lanjutkan Pengecekan Gula Darah", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Tidak Bisa Lanjut Ada Data Yang Kosong", Toast.LENGTH_SHORT).show()
@@ -122,6 +122,7 @@ class NewPatientActivity : AppCompatActivity() {
         val formattedDate = dateFormat.format(currentDateTime)
 
         val data = mapOf(
+            "NIK" to nik,
             "Nama_Lengkap" to namaLengkap,
             "Usia" to usia,
             "Jenis_Kelamin" to jenisKelamin,

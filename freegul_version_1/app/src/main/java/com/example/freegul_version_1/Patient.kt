@@ -1,13 +1,13 @@
 package com.example.freegul_version_1
 
 data class Patient(
-    val nik: String = "",
-    val jenis_kelamin: String = "",
-    val nama_lengkap: String = "",
-    val nilai_gula_darah: Double = 0.0,
-    val no_handphone: String = "",
-    val tanggal: String = "",
-    val usia: Int = 0,
+    val Jenis_Kelamin: String = "",
+    val NIK: String = "",
+    val Nama_Lengkap: String = "",
+    val Nilai_Gula_Darah: Double = 0.0,
+    val No_Handphone: String = "",
+    val Tanggal_Pembuatan: String = "",
+    val Usia: Int = 0,
 )
 
 
