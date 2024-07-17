@@ -5,64 +5,32 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".InputDataActivity">
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@color/green"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/free_gul"
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:layout_marginTop="70dp"
-        android:textAlignment="center" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="415dp"
-        android:layout_height="350dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="250dp"
-        android:src="@drawable/rectangle_home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.518" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="238dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/input_data_pasien"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+    android:background="@color/grey_smooth"
+    android:orientation="vertical"
+    tools:context=".NewPatientActivity">
 
 
     <EditText
-        android:id="@+id/nama_lengkap"
-        android:layout_width="250dp"
+        android:id="@+id/nik"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="316dp"
+        android:layout_marginTop="116dp"
+        android:background="@drawable/input"
+        android:hint="@string/no_nik"
+        android:inputType="number"
+        android:padding="17.5dp"
+        android:textAlignment="center"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/nama_lengkap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="192dp"
         android:background="@drawable/input"
         android:hint="@string/nama_lengkap"
         android:inputType="text"
@@ -70,14 +38,15 @@
         android:textAlignment="center"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/usia"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="348dp"
         android:background="@drawable/input"
         android:ems="10"
         android:hint="@string/usia"
@@ -86,30 +55,29 @@
         android:textAlignment="center"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nama_lengkap" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:id="@+id/jenisKelaminGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:orientation="horizontal"
         android:textColorHint="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/usia"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="35dp"
-        app:layout_constraintHorizontal_bias="0.5">
+        app:layout_constraintTop_toBottomOf="@+id/usia">
+
         <RadioButton
             android:id="@+id/laki"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="30dp"
-            android:textColor="@color/black"
             android:text="@string/laki_laki"
+            android:textColor="@color/black"
             android:textSize="15sp" />
 
         <RadioButton
@@ -125,20 +93,20 @@
 
     <EditText
         android:id="@+id/hp"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="564dp"
+        android:layout_marginTop="268dp"
         android:background="@drawable/input"
         android:ems="10"
         android:hint="@string/no_handphone"
-        android:inputType="number"
+        android:inputType="number|phone"
         android:padding="16dp"
         android:textAlignment="center"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/kirimData"

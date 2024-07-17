@@ -6,34 +6,36 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:background="@color/green"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
             android:padding="16dp"
             android:text="@string/free_gul"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:layout_marginTop="70dp"
-            android:textAlignment="center"
-            />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="570dp"
+        android:layout_width="635dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="15dp"
