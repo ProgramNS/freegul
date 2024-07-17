@@ -16,11 +16,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         auth = FirebaseAuth.getInstance()
 
         binding.gulaDarah.setOnClickListener {
-            val intent = Intent(this, InputDataActivity::class.java)
+            val intent = Intent(this, CheckDataPasienActivity::class.java)
             startActivity(intent)
         }
 

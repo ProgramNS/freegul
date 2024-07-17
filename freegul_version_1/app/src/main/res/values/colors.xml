@@ -5,4 +5,5 @@
     <color name="green">#00C853</color>
     <color name="greenFlash">#0FF80A</color>
     <color name="green_dark">#008000</color>
+    <color name="grey_smooth">#f6f7f2</color>
 </resources>
