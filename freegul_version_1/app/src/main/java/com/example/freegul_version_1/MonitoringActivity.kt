@@ -23,7 +23,7 @@ class MonitoringActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMonitoringBinding
     private lateinit var auth: FirebaseAuth
     private val authToken = "vYeqh3ro1z9vrKdt1iY7jOEgxkitk9eR"
-    private val refreshIntervalMillis = 5000L // Interval pembaruan setiap 5 detik
+    private val refreshIntervalMillis = 1000L // Interval pembaruan setiap 1 detik
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
