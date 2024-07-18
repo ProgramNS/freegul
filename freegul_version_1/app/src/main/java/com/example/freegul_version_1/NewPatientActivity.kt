@@ -33,6 +33,7 @@ class NewPatientActivity : AppCompatActivity() {
             if (isValidInput()) {
                 saveDataToDatabase()
                 val intent = Intent(this, MonitoringActivity::class.java)
+                intent.putExtra("nik", binding.nik.text.toString())
                 startActivity(intent)
                 Toast.makeText(this , "Silahkan Lanjutkan Pengecekan Gula Darah", Toast.LENGTH_SHORT).show()
             } else {
@@ -117,7 +118,7 @@ class NewPatientActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance("https://skripsi-a9be0-default-rtdb.asia-southeast1.firebasedatabase.app/")
         val dataRef = database.getReference("users").child(userId).child("pasien").child(nik)
         val currentDateTime = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
         dateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
         val formattedDate = dateFormat.format(currentDateTime)
 

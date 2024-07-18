@@ -33,8 +33,9 @@ class MonitoringActivity : AppCompatActivity() {
         binding = ActivityMonitoringBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
-
+        supportActionBar?.hide()
         // Ambil data dari Intent
+
         val nik = intent.getStringExtra("nik") ?: ""
         println("NIK: $nik")
 

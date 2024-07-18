@@ -20,6 +20,7 @@ class OldPatientActivity : AppCompatActivity(), SearchAdapter.OnItemClickListene
         super.onCreate(savedInstanceState)
         binding = ActivityOldPatientBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = "Pencarian Data Pasien Lama"
         auth = FirebaseAuth.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if(currentUser != null){

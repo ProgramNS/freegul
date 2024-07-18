@@ -29,13 +29,13 @@ class CheckDataPasienActivity : AppCompatActivity(), BottomNavigationView.OnNavi
         setupBottomNavigationView()
     }
     private fun setupBottomNavigationView() {
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
+        binding.navigation.setOnNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_home -> {
-                // Handle navigation home action if needed
+                backToHome()
                 true
             }
             R.id.navigation_tengah -> {
@@ -58,6 +58,11 @@ class CheckDataPasienActivity : AppCompatActivity(), BottomNavigationView.OnNavi
         finish()
     }
 
+    private fun backToHome(){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     override fun onDestroy() {
         super.onDestroy()
         // Bebaskan objek binding saat aktivitas dihancurkan
