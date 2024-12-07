@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Freegul_version_1" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Freegul_version_1" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
-
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/green</item>
+    </style>
     <style name="Theme.Freegul_version_1" parent="Base.Theme.Freegul_version_1" />
 </resources>
